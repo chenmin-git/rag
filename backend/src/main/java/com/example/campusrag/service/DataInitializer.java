@@ -182,6 +182,35 @@ public class DataInitializer implements CommandLineRunner {
 
                 大型活动需要提前完成安全预案、场地审批和设备申请。活动结束后，申请人应恢复场地原状并配合管理部门完成检查。
                 """, "信息化办公室", "PUBLIC", admin);
+        documentService.ingestText("图书馆服务-借阅与空间预约.md", """
+                图书馆普通图书借期为三十天，读者可在到期前通过图书馆门户或自助借还机续借一次。被其他读者预约的图书不能续借，逾期图书归还后方可恢复完整借阅权限。
+
+                研究间、研讨室和学习空间实行实名预约。预约人应按预约时间到场签到，超过十五分钟未签到视为爽约。连续爽约将触发短期预约限制。
+
+                馆际互借和文献传递服务面向教师、研究生和有科研需求的本科生开放。申请人需填写文献题名、作者、来源、出版年等信息，图书馆会根据馆藏和合作馆情况反馈获取方式。
+
+                电子资源校外访问需通过统一身份认证或 VPN 登录。账号不得转借他人使用，不得批量下载、恶意爬取或用于商业用途。发现异常访问时，图书馆可暂停相关账号的资源访问权限。
+
+                毕业离校前，读者应归还全部外借图书并结清相关费用。若存在遗失、污损或逾期记录，应先到图书馆服务台处理后再办理离校手续。
+                """, "图书馆", "PUBLIC", admin);
+        documentService.ingestText("实验室安全-准入与危化品管理.txt", """
+                新进入实验室的学生必须完成安全教育、线上考试和导师确认。未通过准入培训的人员不得独立开展实验，不得操作高温、高压、强电、激光和危险化学品相关设备。
+
+                危险化学品采购、领用、暂存和废弃物处置应全流程登记。易制毒、易制爆和剧毒化学品应由专人管理，双人领取、双人使用、双人记录，严禁私自转借或带离实验室。
+
+                实验前应完成风险评估，明确实验步骤、个人防护、应急处置和废液分类方式。实验过程中不得离岗，涉及过夜反应的项目需提前报备并设置醒目标识。
+
+                发生泄漏、灼伤、火情或设备异常时，应立即停止实验，切断危险源，按照实验室应急预案处置，并向实验室负责人和学院安全员报告。
+                """, "实验中心", "TEACHER", admin);
+        documentService.ingestText("宿舍后勤-报修与生活服务.md", """
+                宿舍报修可通过后勤服务平台提交，填写楼栋、房间号、联系方式、故障描述和现场照片。漏水、断电、门锁损坏等紧急事项将优先派单处理。
+
+                空调、热水、洗衣机和公共照明属于常见生活服务事项。学生应先确认是否为余额不足、设备预约冲突或临时维护，再提交报修工单。
+
+                宿舍公共区域应保持通道畅通，不得堆放纸箱、家具和私拉电线。发现消防设施缺失、烟感异常或安全出口堵塞，应及时向宿管和后勤服务中心反馈。
+
+                工作人员上门维修前会通过电话或平台消息确认时间。学生应尽量在约定时间留人在场，维修完成后可对工单处理速度和服务态度进行评价。
+                """, "后勤服务中心", "STUDENT", admin);
     }
 
     private void seedQaAndFeedback() {
@@ -201,12 +230,24 @@ public class DataInitializer implements CommandLineRunner {
         QaRecord network = qa(teacher, "校园网账号忘记密码怎么办？",
                 "网络账号初始密码应在首次登录后及时修改。忘记密码时，可先通过统一身份认证平台自助找回；无法自助处理时，联系信息化办公室处理。",
                 "办事指南-校园服务清单.md", "信息化办公室", "PUBLIC", 0.861, 1044, LocalDateTime.now().minusHours(2));
+        QaRecord library = qa(teacher, "研讨室预约迟到会有什么影响？",
+                "图书馆研讨室和学习空间实行实名预约。预约人应按预约时间到场签到，超过十五分钟未签到视为爽约；连续爽约会触发短期预约限制，影响后续空间预约。",
+                "图书馆服务-借阅与空间预约.md", "图书馆", "PUBLIC", 0.902, 936, LocalDateTime.now().minusHours(1).minusMinutes(35));
+        QaRecord lab = qa(teacher, "学生进实验室前必须完成哪些准入？",
+                "新进入实验室的学生必须完成安全教育、线上考试和导师确认。未通过准入培训的人员不得独立开展实验，也不能操作高温、高压、强电、激光和危险化学品相关设备。",
+                "实验室安全-准入与危化品管理.txt", "实验中心", "TEACHER", 0.934, 1268, LocalDateTime.now().minusHours(1).minusMinutes(5));
+        QaRecord repair = qa(student, "宿舍漏水报修会优先处理吗？",
+                "宿舍报修可通过后勤服务平台提交。漏水、断电、门锁损坏等属于紧急维修，后勤部门会在接单后优先处理；提交时建议附上房间号、联系方式和现场照片。",
+                "宿舍后勤-报修与生活服务.md", "后勤服务中心", "STUDENT", 0.918, 870, LocalDateTime.now().minusMinutes(42));
 
-        qaRecordRepository.saveAll(List.of(card, exam, network));
+        qaRecordRepository.saveAll(List.of(card, exam, network, library, lab, repair));
         feedbackRepository.saveAll(List.of(
                 feedback(card, student, "HELPFUL", "回答能直接说明挂失和余额转入流程。", LocalDateTime.now().minusHours(4).minusMinutes(40)),
                 feedback(exam, student, "INCOMPLETE", "希望补充线上申请入口名称。", LocalDateTime.now().minusHours(2).minusMinutes(45)),
-                feedback(network, admin, "SOURCE_WRONG", "来源命中文档正确，但最好展示信息化办公室联系方式。", LocalDateTime.now().minusHours(1).minusMinutes(20))));
+                feedback(network, admin, "SOURCE_WRONG", "来源命中文档正确，但最好展示信息化办公室联系方式。", LocalDateTime.now().minusHours(1).minusMinutes(20)),
+                feedback(library, teacher, "HELPFUL", "空间预约规则和爽约后果描述清楚。", LocalDateTime.now().minusHours(1).minusMinutes(10)),
+                feedback(lab, admin, "HELPFUL", "实验室准入要求适合放到新生培训 FAQ。", LocalDateTime.now().minusMinutes(55)),
+                feedback(repair, student, "INCOMPLETE", "可以再补充夜间紧急联系电话。", LocalDateTime.now().minusMinutes(25))));
     }
 
     private QaRecord qa(
@@ -254,7 +295,10 @@ public class DataInitializer implements CommandLineRunner {
                 log(admin, "DOCUMENT_REBUILD", "教务管理-课程与考试指南.md", "重新切片并同步向量元数据", "127.0.0.1", true, LocalDateTime.now().minusHours(4)),
                 log(student, "RAG_ASK", "chat", "校园卡丢了怎么补办？", "127.0.0.1", true, LocalDateTime.now().minusHours(3).minusMinutes(40)),
                 log(teacher, "RAG_ASK", "chat", "校园网账号忘记密码怎么办？", "127.0.0.1", true, LocalDateTime.now().minusHours(2).minusMinutes(10)),
-                log(admin, "SYSTEM_CONFIG_UPDATE", "spark.enabled", "管理员调整大模型服务开关和检索阈值", "127.0.0.1", true, LocalDateTime.now().minusHours(1))));
+                log(admin, "SYSTEM_CONFIG_UPDATE", "spark.enabled", "管理员调整大模型服务开关和检索阈值", "127.0.0.1", true, LocalDateTime.now().minusHours(1)),
+                log(admin, "DOCUMENT_UPLOAD", "图书馆服务-借阅与空间预约.md", "补充图书馆借阅、空间预约和电子资源访问规则", "127.0.0.1", true, LocalDateTime.now().minusMinutes(50)),
+                log(teacher, "RAG_ASK", "chat", "学生进实验室前必须完成哪些准入？", "127.0.0.1", true, LocalDateTime.now().minusMinutes(35)),
+                log(student, "FEEDBACK_CREATE", "宿舍漏水报修会优先处理吗？", "提交问答反馈并建议补充夜间联系电话", "127.0.0.1", true, LocalDateTime.now().minusMinutes(20))));
     }
 
     private OperationLog log(
