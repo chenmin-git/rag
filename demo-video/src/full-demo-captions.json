@@ -1,0 +1,65 @@
+[
+  {
+    "text": "校园知识库问答系统完成中文化调整，登录页不再出现英文标题和英文功能标签。",
+    "startMs": 0,
+    "endMs": 6500,
+    "timestampMs": 0,
+    "confidence": 1
+  },
+  {
+    "text": "工作台保留指标和图表，移除了冗长巡检说明，并把空状态切换为中文。",
+    "startMs": 6500,
+    "endMs": 13000,
+    "timestampMs": 6500,
+    "confidence": 1
+  },
+  {
+    "text": "问答页展示本地演示或大模型状态、引用来源和反馈入口，界面文案保持一致。",
+    "startMs": 13000,
+    "endMs": 20000,
+    "timestampMs": 13000,
+    "confidence": 1
+  },
+  {
+    "text": "文档管理支持按关键词、部门和处理状态筛选资料，便于维护知识库内容。",
+    "startMs": 20000,
+    "endMs": 26500,
+    "timestampMs": 20000,
+    "confidence": 1
+  },
+  {
+    "text": "资料录入页提供文件上传和手动录入，格式提示已改为自然中文。",
+    "startMs": 26500,
+    "endMs": 33000,
+    "timestampMs": 26500,
+    "confidence": 1
+  },
+  {
+    "text": "系统配置页把接口密钥、召回条数、相似度阈值等参数统一成中文标签。",
+    "startMs": 33000,
+    "endMs": 39500,
+    "timestampMs": 33000,
+    "confidence": 1
+  },
+  {
+    "text": "用户管理覆盖角色、部门和启停状态，适合管理员维护演示或真实账号。",
+    "startMs": 39500,
+    "endMs": 46000,
+    "timestampMs": 39500,
+    "confidence": 1
+  },
+  {
+    "text": "操作日志记录上传、重建索引、问答和配置修改，方便排查运行过程。",
+    "startMs": 46000,
+    "endMs": 52500,
+    "timestampMs": 46000,
+    "confidence": 1
+  },
+  {
+    "text": "反馈列表沉淀用户意见，结合测试结果即可作为发布演示材料。",
+    "startMs": 52500,
+    "endMs": 60000,
+    "timestampMs": 52500,
+    "confidence": 1
+  }
+]

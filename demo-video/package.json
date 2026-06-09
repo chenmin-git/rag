@@ -1,0 +1,16 @@
+{
+  "name": "campus-rag-demo-video",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "still": "remotion still src/index.jsx CampusRagDemo ../docs/campus-rag-demo-frame.png --frame=420 --scale=0.5",
+    "render": "remotion render src/index.jsx CampusRagDemo ../docs/campus-rag-demo.mp4 --codec=h264 --pixel-format=yuv420p"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.474",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "remotion": "4.0.474"
+  }
+}

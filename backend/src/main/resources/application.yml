@@ -1,0 +1,62 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: campus-rag
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 35MB
+  datasource:
+    url: jdbc:h2:mem:campus_rag;MODE=MySQL;DATABASE_TO_LOWER=TRUE;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+
+app:
+  cors:
+    allowed-origins:
+      - http://localhost:5173
+      - http://127.0.0.1:5173
+      - http://localhost:5180
+      - http://127.0.0.1:5180
+  rag:
+    vector-store: ${RAG_VECTOR_STORE:memory}
+    embedding-dimension: ${RAG_EMBEDDING_DIMENSION:384}
+    chunk-size: ${RAG_CHUNK_SIZE:520}
+    chunk-overlap: ${RAG_CHUNK_OVERLAP:80}
+    top-k: ${RAG_TOP_K:5}
+    similarity-threshold: ${RAG_SIMILARITY_THRESHOLD:0.2}
+    max-context-chars: ${RAG_MAX_CONTEXT_CHARS:5200}
+  milvus:
+    uri: ${MILVUS_URI:http://localhost:19530}
+    token: ${MILVUS_TOKEN:root:Milvus}
+    collection: ${MILVUS_COLLECTION:campus_knowledge_chunks}
+  spark:
+    enabled: ${SPARK_ENABLED:false}
+    provider: ${SPARK_PROVIDER:Spark Pro}
+    protocol: ${SPARK_PROTOCOL:http}
+    endpoint: ${SPARK_ENDPOINT:https://spark-api-open.xf-yun.com/v1/chat/completions}
+    api-password: ${SPARK_API_PASSWORD:}
+    model: ${SPARK_MODEL:generalv3}
+    app-id: ${SPARK_APP_ID:}
+    api-key: ${SPARK_API_KEY:}
+    api-secret: ${SPARK_API_SECRET:}
+    ws-url: ${SPARK_WS_URL:wss://spark-api.xf-yun.com/v4.0/chat}
+    domain: ${SPARK_DOMAIN:generalv3}
+    max-tokens: ${SPARK_MAX_TOKENS:2048}
+    temperature: ${SPARK_TEMPERATURE:0.2}
